@@ -1,12 +1,27 @@
 // Конфигурация Yandex GPT API
+// В браузере используем window.env или значения по умолчанию
+const getEnvVar = (name, defaultValue = '') => {
+    if (typeof window !== 'undefined' && window.env && window.env[name]) {
+        return window.env[name];
+    }
+    // Пробуем получить из localStorage (для локальной разработки)
+    const stored = localStorage.getItem(name);
+    if (stored) {
+        return stored;
+    }
+    return defaultValue;
+};
+
 export const YANDEX_GPT_CONFIG = {
     // API ключ от Yandex GPT (получить можно в Yandex Cloud Console)
     // Инструкция: https://yandex.cloud/ru/docs/ai-studio/operations/get-api-key
     // Обычно это строка вида: AQVNxxxxxxxxxxxxx
-    API_KEY: process.env.YANDEX_GPT_API_KEY || '', // API ключ из переменной окружения
+    // Устанавливается через window.env.YANDEX_GPT_API_KEY или localStorage
+    API_KEY: getEnvVar('YANDEX_GPT_API_KEY', ''),
     
     // Folder ID в Yandex Cloud
-    FOLDER_ID: process.env.YANDEX_GPT_FOLDER_ID || '', // Folder ID из переменной окружения
+    // Устанавливается через window.env.YANDEX_GPT_FOLDER_ID или localStorage
+    FOLDER_ID: getEnvVar('YANDEX_GPT_FOLDER_ID', ''),
     
     // Endpoint для Yandex GPT через API Gateway
     API_GATEWAY_URL: 'https://d5d8m7tvs8ntcons5qr8.hsvi2zuh.apigw.yandexcloud.net',
