@@ -1,0 +1,427 @@
+/* Settings Page - Единый стиль с tasks.css */
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Onest', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #FFFFFF;
+    color: #000000;
+    overflow-x: hidden;
+}
+
+/* Верхний хедер */
+.main-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    z-index: 1000;
+}
+
+.page-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #000000;
+    margin: 0;
+    text-align: center;
+    flex: 1;
+}
+
+.back-btn {
+    width: 24px;
+    height: 24px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    color: #000000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.back-btn svg {
+    width: 100%;
+    height: 100%;
+}
+
+/* Основной контент */
+.main-content {
+    margin-top: 60px;
+    padding: 10px;
+    padding-bottom: 40px;
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Секция настроек */
+.settings-section {
+    margin-bottom: 32px;
+}
+
+.settings-section-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #999999;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 16px;
+    padding: 0 4px;
+}
+
+.settings-list {
+    background: #FFFFFF;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid #F5F5F5;
+}
+
+.setting-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border-bottom: 1px solid #F5F5F5;
+    transition: background-color 0.3s ease;
+}
+
+.setting-item:last-child {
+    border-bottom: none;
+}
+
+.setting-item:hover {
+    background: #FAFAFA;
+}
+
+.setting-item-label {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+}
+
+.setting-item-label .label-text {
+    font-size: 16px;
+    font-weight: 500;
+    color: #000000;
+}
+
+.setting-item-label .label-description {
+    font-size: 12px;
+    color: #999999;
+}
+
+/* Поле ввода */
+.setting-input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #E5E5E5;
+    border-radius: 12px;
+    font-size: 16px;
+    font-family: 'Onest', sans-serif;
+    background: #FFFFFF;
+    color: #000000;
+    transition: border-color 0.3s ease;
+}
+
+.setting-input:focus {
+    outline: none;
+    border-color: #000000;
+}
+
+/* Переключатель */
+.setting-toggle {
+    position: relative;
+    width: 50px;
+    height: 30px;
+    background: #E5E5E5;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.setting-toggle.active {
+    background: #000000;
+}
+
+.setting-toggle::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 24px;
+    height: 24px;
+    background: #FFFFFF;
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.setting-toggle.active::after {
+    transform: translateX(20px);
+}
+
+/* Селект */
+.setting-select {
+    padding: 12px 16px;
+    border: 1px solid #E5E5E5;
+    border-radius: 12px;
+    font-size: 16px;
+    font-family: 'Onest', sans-serif;
+    background: #FFFFFF;
+    color: #000000;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+    min-width: 150px;
+}
+
+.setting-select:focus {
+    outline: none;
+    border-color: #000000;
+}
+
+/* Кнопка сохранения */
+.save-button {
+    width: 100%;
+    padding: 16px;
+    background: #000000;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 20px;
+    font-size: 16px;
+    font-weight: 500;
+    font-family: 'Onest', sans-serif;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+}
+
+.save-button:hover {
+    background: #333333;
+}
+
+.save-button:active {
+    transform: scale(0.98);
+}
+
+/* Аватар */
+.avatar-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 24px 20px;
+    border-bottom: 1px solid #F5F5F5;
+}
+
+.avatar-container {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: #F5F5F5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border: 1px solid #87858539;
+}
+
+.avatar-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.avatar-placeholder {
+    font-size: 32px;
+    color: #999999;
+}
+
+.avatar-change-btn {
+    padding: 8px 16px;
+    background: #F5F5F5;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #666666;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.avatar-change-btn:hover {
+    background: #E5E5E5;
+}
+
+/* Нижняя навигация */
+.bottom-navigation {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 58px;
+    background: #FFFFFF;
+    border: 1px solid #87858539;
+    border-radius: 40px;
+    display: none; /* Скрываем нижнее меню на странице настроек */
+    align-items: center;
+    justify-content: space-between;
+    gap: 5px;
+    padding: 8px 25px;
+    z-index: 1000;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    min-width: 400px;
+    max-width: calc(100vw - 40px);
+    width: auto;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px 10px;
+    color: #999999;
+    position: relative;
+    flex: 1 1 0;
+    min-width: 0;
+}
+
+.nav-item.nav-left {
+    align-items: center;
+    order: 1; /* Первая кнопка слева */
+}
+
+.nav-item[data-page="notes"] {
+    order: 5; /* Последняя кнопка справа */
+}
+
+.nav-item[data-page="plan"] {
+    order: 4; /* Четвертая кнопка */
+    padding-left: 30px; /* Отступ слева от кнопки + */
+}
+
+.nav-item.nav-right {
+    align-items: center;
+    order: 2; /* Вторая кнопка */
+    padding-right: 30px; /* Отступ справа от кнопки + */
+}
+
+.nav-icon {
+    width: 24px;
+    height: 24px;
+}
+
+.nav-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: #878585f8;
+}
+
+.nav-add-btn {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    background: #000000;
+    color: #FFFFFF;
+    padding: 0;
+    margin: 0 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Для планшетов (iPad) */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .bottom-navigation {
+        min-width: 550px;
+        max-width: 650px;
+        height: 70px;
+        border-radius: 50px;
+        padding: 10px 35px;
+        bottom: 30px;
+        gap: 5px;
+    }
+    
+    .nav-item {
+        min-width: 75px;
+        max-width: 85px;
+    }
+    
+    .nav-add-btn {
+        width: 70px;
+        height: 70px;
+    }
+    
+    .nav-icon {
+        width: 28px;
+        height: 28px;
+    }
+    
+    .nav-label {
+        font-size: 13px;
+    }
+}
+
+/* Для десктопов (ПК) */
+@media (min-width: 1025px) {
+    .bottom-navigation {
+        min-width: 650px;
+        max-width: 750px;
+        height: 75px;
+        border-radius: 55px;
+        padding: 12px 45px;
+        bottom: 40px;
+        gap: 5px;
+    }
+    
+    .nav-item {
+        min-width: 85px;
+        max-width: 95px;
+    }
+    
+    .nav-add-btn {
+        width: 75px;
+        height: 75px;
+    }
+    
+    .nav-icon {
+        width: 30px;
+        height: 30px;
+    }
+    
+    .nav-label {
+        font-size: 14px;
+    }
+}
+

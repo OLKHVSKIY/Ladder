@@ -1,0 +1,653 @@
+/* Стили для страницы заметок */
+
+/* Скрываем header-divider на странице заметок */
+.header-divider {
+    display: none !important;
+}
+
+/* Overlay для редактора заметок */
+.note-editor-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 4000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+
+.note-editor-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Контейнер редактора заметок */
+.note-editor-container {
+    width: 100%;
+    max-width: 100%;
+    height: 90vh;
+    max-height: 90vh;
+    background: #FFFFFF;
+    border-radius: 20px 20px 0 0;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transform: translateY(100%);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    margin-top: auto;
+}
+
+.note-editor-overlay.active .note-editor-container {
+    transform: translateY(0);
+}
+
+/* Панель инструментов */
+.note-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    background: #F8F8F8;
+    border-bottom: 1px solid #E5E5E5;
+    flex-shrink: 0;
+}
+
+.toolbar-group {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding-right: 12px;
+    border-right: 1px solid #E5E5E5;
+}
+
+.toolbar-group:last-of-type {
+    border-right: none;
+}
+
+.toolbar-actions {
+    margin-left: auto;
+}
+
+.toolbar-btn {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    color: #666666;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 0;
+}
+
+.toolbar-btn:hover {
+    background: #E5E5E5;
+    color: #000000;
+    transform: scale(1.05);
+}
+
+.toolbar-btn:active {
+    transform: scale(0.95);
+}
+
+.toolbar-btn svg {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+}
+
+.toolbar-btn-close {
+    color: #DC3545;
+}
+
+.toolbar-btn-close:hover {
+    background: rgba(220, 53, 69, 0.1);
+    color: #DC3545;
+}
+
+/* Область редактирования */
+.note-editor {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    font-family: 'Onest', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    color: #000000;
+    outline: none;
+    word-wrap: break-word;
+    min-height: 0;
+}
+
+.note-editor:empty:before {
+    content: attr(data-placeholder);
+    color: #999999;
+    pointer-events: none;
+}
+
+/* Стили для форматированного текста */
+.note-editor h1 {
+    font-size: 24px;
+    font-weight: 700;
+    margin: 16px 0 12px 0;
+    line-height: 1.3;
+    color: #000000;
+}
+
+.note-editor h2 {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 14px 0 10px 0;
+    line-height: 1.3;
+    color: #000000;
+}
+
+.note-editor p {
+    margin: 8px 0;
+    line-height: 1.6;
+}
+
+.note-editor ul,
+.note-editor ol {
+    margin: 8px 0;
+    padding-left: 24px;
+}
+
+.note-editor li {
+    margin: 4px 0;
+    line-height: 1.6;
+}
+
+.note-editor strong {
+    font-weight: 600;
+}
+
+.note-editor em {
+    font-style: italic;
+}
+
+.note-editor u {
+    text-decoration: underline;
+}
+
+/* Ресайзер для изменения высоты */
+.note-resizer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 8px;
+    cursor: ns-resize;
+    background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.05));
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    transition: background 0.2s ease;
+    z-index: 10;
+}
+
+.note-resizer:hover {
+    background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.1));
+}
+
+.note-resizer::after {
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 4px;
+    background: #CCCCCC;
+    border-radius: 2px;
+    transition: background 0.2s ease;
+}
+
+.note-resizer:hover::after {
+    background: #999999;
+}
+
+/* Скроллбар */
+.note-editor::-webkit-scrollbar {
+    width: 6px;
+}
+
+.note-editor::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.note-editor::-webkit-scrollbar-thumb {
+    background: #CCCCCC;
+    border-radius: 3px;
+}
+
+.note-editor::-webkit-scrollbar-thumb:hover {
+    background: #999999;
+}
+
+/* Анимация появления */
+@keyframes noteEditorAppear {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.note-editor-container.active {
+    animation: noteEditorAppear 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Кнопка прикрепить */
+.note-attach-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 24px;
+    margin: 16px;
+    background: #000000;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 17px;
+    font-family: 'Onest', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    flex-shrink: 0;
+}
+
+.note-attach-btn:hover {
+    background: #C82333;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+}
+
+.note-attach-btn:active {
+    transform: translateY(0);
+}
+
+.note-attach-btn svg {
+    width: 20px;
+    height: 20px;
+    stroke: currentColor;
+}
+
+/* Стикеры заметок */
+body .main-content {
+    position: relative;
+    min-height: calc(100vh - 160px);
+    padding: 10px;
+    padding-bottom: 100px; /* Дополнительный отступ снизу для скролла */
+    margin-top: 60px;
+    max-width: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: calc(100vh - 60px);
+    box-sizing: border-box;
+}
+
+.note-sticker {
+    position: absolute;
+    width: 340px;
+    min-height: 150px;
+    background: #FFEB3B;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    cursor: grab;
+    transition: box-shadow 0.3s ease, transform 0.2s ease;
+    z-index: 1; /* Начальный z-index, будет увеличиваться при клике. Под хедером (z-index хедера 3001) */
+    animation: stickerAppear 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transform-origin: center;
+}
+
+.note-sticker.bring-to-front {
+    z-index: 50 !important; /* Поверх других стикеров, но под хедером (3001) */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+@keyframes stickerAppear {
+    from {
+        opacity: 0;
+        transform: scale(0.8) rotate(-5deg);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+    }
+}
+
+.note-sticker:active {
+    cursor: grabbing;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    transform: scale(1.02);
+}
+
+.sticker-header {
+    padding: 8px 12px;
+    background: rgba(0, 0, 0, 0.05);
+    display: flex;
+    justify-content: flex-end;
+    flex-shrink: 0;
+    cursor: grab;
+}
+
+.sticker-controls {
+    display: flex;
+    gap: 4px;
+}
+
+.sticker-btn {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.7);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 0;
+}
+
+.sticker-btn:hover {
+    background: rgba(255, 255, 255, 0.9);
+    transform: scale(1.1);
+}
+
+.sticker-btn:active {
+    transform: scale(0.95);
+}
+
+.sticker-btn svg {
+    width: 16px;
+    height: 16px;
+    stroke: #333333;
+}
+
+.sticker-delete-btn:hover {
+    background: rgba(220, 53, 69, 0.2);
+}
+
+.sticker-delete-btn:hover svg {
+    stroke: #DC3545;
+}
+
+/* Стили для замочка */
+.lock-icon {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.lock-icon .lock-open-group,
+.lock-icon .lock-closed-group {
+    transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Анимация закрытия замочка */
+.lock-icon.locked .lock-closed-group {
+    animation: lockClose 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Анимация открытия замочка */
+.lock-icon:not(.locked) .lock-open-group {
+    animation: lockOpen 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes lockClose {
+    0% {
+        transform: scale(0.8) rotate(-5deg);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.1) rotate(2deg);
+    }
+    100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+    }
+}
+
+@keyframes lockOpen {
+    0% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.1) rotate(-2deg);
+    }
+    100% {
+        transform: scale(0.8) rotate(5deg);
+        opacity: 0;
+    }
+}
+
+.sticker-lock-btn:hover {
+    background: rgba(33, 150, 243, 0.2);
+}
+
+.sticker-lock-btn:hover svg {
+    stroke: #2196F3;
+}
+
+/* Заблокированный стикер */
+.note-sticker.sticker-locked {
+    cursor: default !important;
+    opacity: 0.85;
+}
+
+.note-sticker.sticker-locked .sticker-header {
+    cursor: default !important;
+}
+
+.note-sticker.sticker-locked .sticker-resizer {
+    cursor: default !important;
+    pointer-events: none;
+}
+
+.sticker-content {
+    flex: 1;
+    padding: 12px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    font-family: 'Onest', sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #000000;
+    word-wrap: break-word;
+}
+
+.sticker-content h1,
+.sticker-content h2 {
+    margin: 8px 0 4px 0;
+}
+
+.sticker-content p {
+    margin: 4px 0;
+}
+
+.sticker-content ul,
+.sticker-content ol {
+    margin: 4px 0;
+    padding-left: 20px;
+}
+
+.sticker-resizer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 8px;
+    cursor: ns-resize;
+    background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.1));
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    transition: background 0.2s ease;
+}
+
+.sticker-resizer:hover {
+    background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.15));
+}
+
+.sticker-resizer::after {
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 3px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 2px;
+}
+
+/* Скроллбар для стикера */
+.sticker-content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.sticker-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.sticker-content::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 2px;
+}
+
+.sticker-content::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .note-editor-container {
+        max-width: 100%;
+        height: 90vh;
+        max-height: 90vh;
+        border-radius: 20px 20px 0 0;
+        margin-top: auto;
+    }
+    
+    .note-editor-overlay {
+        align-items: flex-end;
+        padding: 0;
+    }
+    
+    .note-toolbar {
+        padding: 10px 12px;
+    }
+    
+    .toolbar-btn {
+        width: 32px;
+        height: 32px;
+    }
+    
+    .note-editor {
+        padding: 16px;
+        font-size: 16px;
+    }
+    
+    .note-sticker {
+        width: calc(100% - 40px);
+        max-width: 340px;
+    }
+}
+
+/* Пустое состояние */
+.empty-state {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    padding: 40px 20px;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.empty-state-text {
+    font-family: 'Onest', sans-serif;
+    font-size: 22px;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.4);
+    text-align: center;
+    letter-spacing: -0.01em;
+    margin-top: -90px;
+}
+
+@media (max-width: 768px) {
+    .empty-state-text {
+        font-size: 20px;
+    }
+}
+
+/* Палитра цветов */
+.color-picker-popup {
+    background: #FFFFFF;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    padding: 12px;
+    animation: colorPickerAppear 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: top left;
+}
+
+@keyframes colorPickerAppear {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.color-picker-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+}
+
+.color-picker-item {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 2px solid transparent;
+}
+
+.color-picker-item:hover {
+    transform: scale(1.1);
+    border-color: rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+

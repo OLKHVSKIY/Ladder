@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Ladder - Задачи</title>
+    <link rel="icon" type="image/png" href="/assets/images/icons/ai.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Onest:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/themes/light.css">
+    <link rel="stylesheet" href="/assets/css/pages/tasks.css">
+    <link rel="stylesheet" href="/assets/css/components/task-card.css">
+    <link rel="stylesheet" href="/assets/css/animations/transitions.css">
+    <style>
+        /* Скрываем контент до применения переводов */
+        body:not(.i18n-ready) .main-content {
+            visibility: hidden;
+        }
+    </style>
+    <script>
+        // Применяем язык ДО загрузки страницы
+        (function() {
+            const lang = localStorage.getItem('language') || 'ru';
+            document.documentElement.lang = lang;
+        })();
+    </script>
+</head>
+<body>
+    <!-- Сайдбар -->
+    <div class="sidebar-overlay" id="sidebar-overlay">
+        <div class="sidebar-content">
+            <button class="sidebar-item" data-action="chat">
+                <span class="sidebar-item-text" data-i18n="sidebar.chat">Чат с AI</span>
+            </button>
+            <button class="sidebar-item" data-action="tasks">
+                <span class="sidebar-item-text" data-i18n="sidebar.tasks">Задачи</span>
+            </button>
+            <button class="sidebar-item" data-action="info">
+                <span class="sidebar-item-text" data-i18n="sidebar.info">Информация</span>
+            </button>
+            <button class="sidebar-item" data-action="support">
+                <span class="sidebar-item-text" data-i18n="sidebar.support">Поддержка</span>
+            </button>
+            <button class="sidebar-item" data-action="suggest">
+                <span class="sidebar-item-text" data-i18n="sidebar.suggest">Предложить идею</span>
+            </button>
+            <button class="sidebar-item" data-action="about">
+                <span class="sidebar-item-text" data-i18n="sidebar.about">О нас</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Шторка с приветствием -->
+    <div class="greeting-panel" id="greeting-panel">
+        <div class="greeting-panel-background">
+            <!-- Анимированный фон для утра (восход) -->
+            <div class="sunrise-animation" id="sunrise-animation">
+                <svg class="sunrise-svg" viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice">
+                    <!-- Солнце восходящее -->
+                    <circle class="sun-circle" cx="200" cy="250" r="45" fill="#FFD700">
+                        <animate attributeName="cy" values="250;170;170" dur="6s" repeatCount="indefinite" fill="freeze"/>
+                        <animate attributeName="opacity" values="0.4;1;1" dur="6s" repeatCount="indefinite" fill="freeze"/>
+                        <animate attributeName="r" values="40;48;48" dur="6s" repeatCount="indefinite" fill="freeze"/>
+                    </circle>
+                    <!-- Лучи солнца -->
+                    <g class="sun-rays" transform="translate(200, 170)">
+                        <line x1="0" y1="0" x2="0" y2="-25" stroke="#FFD700" stroke-width="3" stroke-linecap="round" opacity="0">
+                            <animate attributeName="opacity" values="0;0.9;0.9" dur="6s" repeatCount="indefinite" fill="freeze"/>
+                        </line>
+                        <line x1="0" y1="0" x2="18" y2="-12" stroke="#FFD700" stroke-width="3" stroke-linecap="round" opacity="0" transform="rotate(30)">
+                            <animate attributeName="opacity" values="0;0.9;0.9" dur="6s" repeatCount="indefinite" fill="freeze"/>
+                        </line>
+                        <line x1="0" y1="0" x2="-18" y2="-12" stroke="#FFD700" stroke-width="3" stroke-linecap="round" opacity="0" transform="rotate(-30)">
+                            <animate attributeName="opacity" values="0;0.9;0.9" dur="6s" repeatCount="indefinite" fill="freeze"/>
+                        </line>
+                        <line x1="0" y1="0" x2="25" y2="0" stroke="#FFD700" stroke-width="3" stroke-linecap="round" opacity="0" transform="rotate(60)">
+                            <animate attributeName="opacity" values="0;0.9;0.9" dur="6s" repeatCount="indefinite" fill="freeze"/>
+                        </line>
+                        <line x1="0" y1="0" x2="-25" y2="0" stroke="#FFD700" stroke-width="3" stroke-linecap="round" opacity="0" transform="rotate(-60)">
+                            <animate attributeName="opacity" values="0;0.9;0.9" dur="6s" repeatCount="indefinite" fill="freeze"/>
+                        </line>
+                        <line x1="0" y1="0" x2="18" y2="12" stroke="#FFD700" stroke-width="3" stroke-linecap="round" opacity="0" transform="rotate(120)">
+                            <animate attributeName="opacity" values="0;0.9;0.9" dur="6s" repeatCount="indefinite" fill="freeze"/>
+                        </line>
+                        <line x1="0" y1="0" x2="-18" y2="12" stroke="#FFD700" stroke-width="3" stroke-linecap="round" opacity="0" transform="rotate(-120)">
+                            <animate attributeName="opacity" values="0;0.9;0.9" dur="6s" repeatCount="indefinite" fill="freeze"/>
+                        </line>
+                        <line x1="0" y1="0" x2="0" y2="25" stroke="#FFD700" stroke-width="3" stroke-linecap="round" opacity="0" transform="rotate(180)">
+                            <animate attributeName="opacity" values="0;0.9;0.9" dur="6s" repeatCount="indefinite" fill="freeze"/>
+                        </line>
+                    </g>
+                    <!-- Облака -->
+                    <ellipse class="cloud cloud-1" cx="100" cy="70" rx="45" ry="28" fill="#FFE5B4" opacity="0.75">
+                        <animate attributeName="cx" values="70;130;70" dur="12s" repeatCount="indefinite"/>
+                    </ellipse>
+                    <ellipse class="cloud cloud-2" cx="300" cy="90" rx="40" ry="25" fill="#FFE5B4" opacity="0.7">
+                        <animate attributeName="cx" values="270;330;270" dur="15s" repeatCount="indefinite"/>
+                    </ellipse>
+                    <ellipse class="cloud cloud-3" cx="200" cy="55" rx="38" ry="24" fill="#FFE5B4" opacity="0.65">
+                        <animate attributeName="cx" values="170;230;170" dur="14s" repeatCount="indefinite"/>
+                    </ellipse>
+                </svg>
+            </div>
+            
+            <!-- Анимированный фон для дня (солнцестояние) -->
+            <div class="day-animation" id="day-animation">
+                <svg class="day-svg" viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice">
+                    <!-- Небо с градиентом -->
+                    <defs>
+                        <linearGradient id="skyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" style="stop-color:#87CEEB;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#E0F2FE;stop-opacity:1" />
+                        </linearGradient>
+                        <linearGradient id="grassGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" style="stop-color:#7CB342;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#558B2F;stop-opacity:1" />
+                        </linearGradient>
+                        <radialGradient id="sunGradient" cx="50%" cy="50%">
+                            <stop offset="0%" style="stop-color:#FFEB3B;stop-opacity:1" />
+                            <stop offset="70%" style="stop-color:#FFD700;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#FFA500;stop-opacity:0.8" />
+                        </radialGradient>
+                        <filter id="glow">
+                            <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                            <feMerge>
+                                <feMergeNode in="coloredBlur"/>
+                                <feMergeNode in="SourceGraphic"/>
+                            </feMerge>
+                        </filter>
+                    </defs>
+                    
+                    <!-- Небо -->
+                    <rect width="400" height="200" fill="url(#skyGradient)"/>
+                    
+                    <!-- Легкие облака -->
+                    <g class="day-clouds">
+                        <ellipse class="day-cloud cloud-1" cx="80" cy="50" rx="50" ry="30" fill="#FFFFFF" opacity="0.7">
+                            <animate attributeName="cx" values="50;110;50" dur="18s" repeatCount="indefinite"/>
+                        </ellipse>
+                        <ellipse class="day-cloud cloud-2" cx="320" cy="65" rx="45" ry="28" fill="#FFFFFF" opacity="0.65">
+                            <animate attributeName="cx" values="290;350;290" dur="20s" repeatCount="indefinite"/>
+                        </ellipse>
+                        <ellipse class="day-cloud cloud-3" cx="200" cy="40" rx="40" ry="25" fill="#FFFFFF" opacity="0.6">
+                            <animate attributeName="cx" values="170;230;170" dur="22s" repeatCount="indefinite"/>
+                        </ellipse>
+                    </g>
+                    
+                    <!-- Солнце сверху справа -->
+                    <g class="day-sun-group">
+                        <circle class="day-sun" cx="320" cy="50" r="28" fill="url(#sunGradient)" filter="url(#glow)" opacity="0.95">
+                            <animate attributeName="r" values="26;30;26" dur="4s" repeatCount="indefinite"/>
+                        </circle>
+                        <!-- Мягкие лучи вокруг солнца -->
+                        <g class="sun-rays-soft">
+                            <circle cx="320" cy="50" r="35" fill="none" stroke="#FFD700" stroke-width="1" opacity="0.3"/>
+                            <circle cx="320" cy="50" r="40" fill="none" stroke="#FFD700" stroke-width="0.8" opacity="0.2"/>
+                        </g>
+                    </g>
+                    
+                    <!-- Трава снизу -->
+                    <g class="grass-layer">
+                        <!-- Основание травы -->
+                        <rect x="0" y="160" width="400" height="40" fill="url(#grassGradient)"/>
+                        <!-- Травинки -->
+                        <path class="grass-blade" d="M 50 160 Q 52 150, 54 160 T 58 160" stroke="#558B2F" stroke-width="2" fill="none" opacity="0.8"/>
+                        <path class="grass-blade" d="M 60 160 Q 62 148, 64 160 T 68 160" stroke="#558B2F" stroke-width="2" fill="none" opacity="0.8"/>
+                        <path class="grass-blade" d="M 70 160 Q 72 152, 74 160 T 78 160" stroke="#558B2F" stroke-width="2" fill="none" opacity="0.8"/>
+                        <path class="grass-blade" d="M 100 160 Q 102 150, 104 160 T 108 160" stroke="#558B2F" stroke-width="2" fill="none" opacity="0.8"/>
+                        <path class="grass-blade" d="M 110 160 Q 112 148, 114 160 T 118 160" stroke="#558B2F" stroke-width="2" fill="none" opacity="0.8"/>
+                        <path class="grass-blade" d="M 150 160 Q 152 150, 154 160 T 158 160" stroke="#558B2F" stroke-width="2" fill="none" opacity="0.8"/>
+                        <path class="grass-blade" d="M 160 160 Q 162 148, 164 160 T 168 160" stroke="#558B2F" stroke-width="2" fill="none" opacity="0.8"/>
+                        <path class="grass-blade" d="M 200 160 Q 202 150, 204 160 T 208 160" stroke="#558B2F" stroke-width="2" fill="none" opacity="0.8"/>
+                        <path class="grass-blade" d="M 210 160 Q 212 148, 214 160 T 218 160" stroke="#558B2F" stroke-width="2" fill="none" opacity="0.8"/>
+                        <path class="grass-blade" d="M 250 160 Q 252 150, 254 160 T 258 160" stroke="#558B2F" stroke-width="2" fill="none" opacity="0.8"/>
+                        <path class="grass-blade" d="M 260 160 Q 262 148, 264 160 T 268 160" stroke="#558B2F" stroke-width="2" fill="none" opacity="0.8"/>
+                        <path class="grass-blade" d="M 300 160 Q 302 150, 304 160 T 308 160" stroke="#558B2F" stroke-width="2" fill="none" opacity="0.8"/>
+                        <path class="grass-blade" d="M 310 160 Q 312 148, 314 160 T 318 160" stroke="#558B2F" stroke-width="2" fill="none" opacity="0.8"/>
+                        <path class="grass-blade" d="M 350 160 Q 352 150, 354 160 T 358 160" stroke="#558B2F" stroke-width="2" fill="none" opacity="0.8"/>
+                        <path class="grass-blade" d="M 360 160 Q 362 148, 364 160 T 368 160" stroke="#558B2F" stroke-width="2" fill="none" opacity="0.8"/>
+                    </g>
+                    
+                    <!-- Дерево -->
+                    <g class="tree">
+                        <!-- Ствол -->
+                        <rect x="120" y="140" width="12" height="25" fill="#8D6E63" rx="2"/>
+                        <!-- Крона (листва) -->
+                        <ellipse cx="126" cy="130" rx="35" ry="30" fill="#4CAF50" opacity="0.9"/>
+                        <ellipse cx="110" cy="125" rx="25" ry="22" fill="#66BB6A" opacity="0.85"/>
+                        <ellipse cx="142" cy="125" rx="25" ry="22" fill="#66BB6A" opacity="0.85"/>
+                        <ellipse cx="126" cy="120" rx="28" ry="25" fill="#81C784" opacity="0.8"/>
+                        <!-- Тени на листве для объема -->
+                        <ellipse cx="120" cy="128" rx="20" ry="18" fill="#388E3C" opacity="0.4"/>
+                        <ellipse cx="132" cy="132" rx="18" ry="16" fill="#2E7D32" opacity="0.3"/>
+                    </g>
+                </svg>
+            </div>
+            
+            <!-- Анимированный фон для вечера (закат) -->
+            <div class="sunset-animation" id="sunset-animation">
+                <svg class="sunset-svg" viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice">
+                    <!-- Солнце заходящее -->
+                    <circle class="sunset-sun" cx="200" cy="180" r="55" fill="#FF6B42">
+                        <animate attributeName="cy" values="180;230;230" dur="7s" repeatCount="indefinite" fill="freeze"/>
+                        <animate attributeName="r" values="55;48;48" dur="7s" repeatCount="indefinite" fill="freeze"/>
+                        <animate attributeName="fill" values="#FF6B42;#FF8C42;#FF8C42" dur="7s" repeatCount="indefinite" fill="freeze"/>
+                        <animate attributeName="opacity" values="1;0.9;0.9" dur="7s" repeatCount="indefinite" fill="freeze"/>
+                    </circle>
+                    <!-- Лучи заката -->
+                    <g class="sunset-rays" transform="translate(200, 180)">
+                        <line x1="0" y1="0" x2="0" y2="-50" stroke="#FF8C42" stroke-width="4" stroke-linecap="round" opacity="0.6">
+                            <animate attributeName="opacity" values="0.8;0.2;0.2" dur="7s" repeatCount="indefinite" fill="freeze"/>
+                        </line>
+                        <line x1="0" y1="0" x2="30" y2="-20" stroke="#FF8C42" stroke-width="3.5" stroke-linecap="round" opacity="0.5" transform="rotate(30)">
+                            <animate attributeName="opacity" values="0.7;0.15;0.15" dur="7s" repeatCount="indefinite" fill="freeze"/>
+                        </line>
+                        <line x1="0" y1="0" x2="-30" y2="-20" stroke="#FF8C42" stroke-width="3.5" stroke-linecap="round" opacity="0.5" transform="rotate(-30)">
+                            <animate attributeName="opacity" values="0.7;0.15;0.15" dur="7s" repeatCount="indefinite" fill="freeze"/>
+                        </line>
+                        <line x1="0" y1="0" x2="40" y2="0" stroke="#FF8C42" stroke-width="3" stroke-linecap="round" opacity="0.4" transform="rotate(60)">
+                            <animate attributeName="opacity" values="0.6;0.1;0.1" dur="7s" repeatCount="indefinite" fill="freeze"/>
+                        </line>
+                        <line x1="0" y1="0" x2="-40" y2="0" stroke="#FF8C42" stroke-width="3" stroke-linecap="round" opacity="0.4" transform="rotate(-60)">
+                            <animate attributeName="opacity" values="0.6;0.1;0.1" dur="7s" repeatCount="indefinite" fill="freeze"/>
+                        </line>
+                    </g>
+                    <!-- Облака на закате -->
+                    <ellipse class="sunset-cloud cloud-1" cx="120" cy="60" rx="55" ry="32" fill="#FFB84D" opacity="0.7">
+                        <animate attributeName="cx" values="90;150;90" dur="14s" repeatCount="indefinite"/>
+                    </ellipse>
+                    <ellipse class="sunset-cloud cloud-2" cx="280" cy="75" rx="50" ry="30" fill="#FF8C42" opacity="0.65">
+                        <animate attributeName="cx" values="250;310;250" dur="16s" repeatCount="indefinite"/>
+                    </ellipse>
+                    <ellipse class="sunset-cloud cloud-3" cx="200" cy="45" rx="48" ry="28" fill="#FF9D5C" opacity="0.6">
+                        <animate attributeName="cx" values="170;230;170" dur="18s" repeatCount="indefinite"/>
+                    </ellipse>
+                </svg>
+            </div>
+        </div>
+        <div class="greeting-panel-content">
+            <div class="greeting-header">
+                <div class="greeting-day" id="greeting-day">Вс</div>
+                <div class="greeting-date" id="greeting-date">21 декабря 2025</div>
+            </div>
+            <div class="greeting-text-container">
+                <div class="greeting-text" id="greeting-text">Доброе утро</div>
+                <div class="greeting-icon" id="greeting-icon">☀️</div>
+            </div>
+            <div class="greeting-stats" id="greeting-stats">
+                <div class="greeting-stats-text">Сегодня у вас: 13 задач,</div>
+                <div class="greeting-stats-text">Выполнено: 0</div>
+            </div>
+            <div class="greeting-panel-bottom-divider"></div>
+        </div>
+        <div class="stars-container" id="stars-container"></div>
+    </div>
+
+    <!-- Верхний хедер -->
+    <header class="main-header">
+        <div class="header-divider"></div>
+        <button class="burger-menu" id="burger-menu" data-i18n="[aria-label]common.menu" aria-label="Меню">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+            </svg>
+        </button>
+        <h1 class="page-title" data-i18n="tasks.title">Все задачи</h1>
+        <button class="settings-btn" id="settings-btn" data-i18n="[aria-label]common.settings" aria-label="Настройки">
+            <img src="/assets/images/icons/settings.png" alt="Настройки" width="24" height="24">
+        </button>
+    </header>
+
+    <!-- Основной контент -->
+    <main class="main-content">
+        <!-- Выбранная дата -->
+        <div class="selected-date-container">
+            <div class="selected-date">
+                <span class="date-number" id="date-number">26</span>
+                <span class="date-month-year" id="date-month-year" tabindex="0">дек. 2025</span>
+            </div>
+        </div>
+
+        <!-- Календарь -->
+        <div class="date-picker-overlay" id="date-picker-overlay">
+            <div class="date-picker-modal">
+                <div class="date-picker-header">
+                    <h3>Выберите дату</h3>
+                    <button class="date-picker-close" id="date-picker-close">&times;</button>
+                </div>
+                <div id="main-date-calendar"></div>
+            </div>
+        </div>
+
+        <!-- Календарь недели -->
+        <div class="week-calendar-container">
+            <div class="week-calendar" id="week-calendar">
+                <!-- Будет заполнено через JS -->
+            </div>
+        </div>
+
+        <!-- Задачи -->
+        <div class="tasks-section">
+            <div id="task-list" class="task-list">
+                <!-- Задачи будут добавлены через JS -->
+            </div>
+        </div>
+    </main>
+
+   <!-- Нижняя навигация - ИСПРАВЛЕННАЯ -->
+<nav class="bottom-navigation">
+    <!-- Задачи (самая левая) -->
+    <button class="nav-item active" data-page="tasks">
+        <img src="/assets/images/icons/checklist.png" alt="Задачи" class="nav-icon" width="22" height="22">
+        <span class="nav-label" data-i18n="nav.tasks">Задачи</span>
+    </button>
+    
+    <!-- GPT (слева от центра) -->
+    <button class="nav-item" data-page="gpt">
+        <img src="/assets/images/icons/ai.png" alt="GPT" class="nav-icon" width="22" height="22">
+        <span class="nav-label" data-i18n="nav.gpt">GPT</span>
+    </button>
+    
+    <!-- Круг с плюсом (в центре) -->
+    <button class="nav-item nav-add-btn" id="add-task-btn" aria-label="Добавить задачу">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+        </svg>
+    </button>
+    
+    <!-- План (справа от центра) -->
+    <button class="nav-item" data-page="plan">
+        <img src="/assets/images/icons/draft.png" alt="План" class="nav-icon" width="22" height="22">
+        <span class="nav-label" data-i18n="nav.plan">План</span>
+    </button>
+    
+    <!-- Заметки (самая правая) -->
+    <button class="nav-item" data-page="notes">
+        <img src="/assets/images/icons/notes.png" alt="Заметки" class="nav-icon" width="22" height="22">
+        <span class="nav-label" data-i18n="nav.notes">Заметки</span>
+    </button>
+</nav>
+
+    <!-- Модальное окно создания задачи -->
+    <div class="task-create-modal" id="task-create-modal">
+        <div class="task-create-modal-content">
+            <div class="task-create-header">
+                <h2>Новая задача</h2>
+                <button class="task-create-close" id="task-create-close" aria-label="Закрыть">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <form id="task-create-form" class="task-create-form">
+                <div class="task-create-field">
+                    <label for="task-title">Название</label>
+                    <input type="text" id="task-title" name="title" placeholder="Введите название задачи" required>
+                </div>
+                
+                <div class="task-create-field">
+                    <label for="task-description">Описание</label>
+                    <textarea id="task-description" name="description" placeholder="Введите описание задачи (необязательно)" rows="3"></textarea>
+                </div>
+                
+                <div class="task-create-field">
+                    <label for="task-priority">Приоритет</label>
+                    <div class="priority-selector">
+                        <button type="button" class="priority-option" data-priority="1">
+                            <img src="/assets/images/icons/thunder-red.png" alt="Приоритет 1" width="20" height="20">
+                            <span>1</span>
+                        </button>
+                        <button type="button" class="priority-option" data-priority="2">
+                            <img src="/assets/images/icons/thunder-yellow.png" alt="Приоритет 2" width="20" height="20">
+                            <span>2</span>
+                        </button>
+                        <button type="button" class="priority-option" data-priority="3">
+                            <img src="/assets/images/icons/thunder-blue.png" alt="Приоритет 3" width="20" height="20">
+                            <span>3</span>
+                        </button>
+                    </div>
+                    <input type="hidden" id="task-priority" name="priority" value="1">
+                </div>
+                
+                <div class="task-create-field">
+                    <label for="task-date-type">Дата</label>
+                    <div class="date-type-selector">
+                        <button type="button" class="date-type-option active" data-type="single">Один день</button>
+                        <button type="button" class="date-type-option" data-type="range">Период</button>
+                    </div>
+                </div>
+                
+                <div class="task-create-field" id="single-date-field">
+                    <label>Выберите дату</label>
+                    <div class="selected-date-display" id="selected-date-display">
+                        <span class="date-number-display" id="date-number-display"></span>
+                        <span class="date-month-year-display" id="date-month-year-display"></span>
+                    </div>
+                    <div class="date-picker-overlay-modal" id="date-picker-overlay-modal">
+                        <div class="date-picker-modal-content">
+                            <div class="date-picker-header-modal">
+                                <h3>Выберите дату</h3>
+                                <button type="button" class="date-picker-close-modal" id="date-picker-close-modal">&times;</button>
+                            </div>
+                            <div id="single-date-calendar"></div>
+                        </div>
+                    </div>
+                    <input type="hidden" id="task-date" name="date" value="">
+                </div>
+                
+                <div class="task-create-field" id="range-date-field" style="display: none;">
+                    <label>Выберите период</label>
+                    <div class="date-range-container">
+                        <div class="date-range-item">
+                            <span class="date-range-label">С</span>
+                            <div class="selected-date-display" id="start-date-display">
+                                <span class="date-number-display" id="start-date-number"></span>
+                                <span class="date-month-year-display" id="start-date-month-year"></span>
+                            </div>
+                        </div>
+                        <div class="date-range-item">
+                            <span class="date-range-label">По</span>
+                            <div class="selected-date-display" id="end-date-display">
+                                <span class="date-number-display" id="end-date-number"></span>
+                                <span class="date-month-year-display" id="end-date-month-year"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Календарь для начальной даты -->
+                    <div class="date-picker-overlay-modal" id="start-date-picker-overlay">
+                        <div class="date-picker-modal-content">
+                            <div class="date-picker-header-modal">
+                                <h3>Выберите начальную дату</h3>
+                                <button type="button" class="date-picker-close-modal" id="start-date-picker-close">&times;</button>
+                            </div>
+                            <div id="start-date-calendar"></div>
+                        </div>
+                    </div>
+                    <!-- Календарь для конечной даты -->
+                    <div class="date-picker-overlay-modal" id="end-date-picker-overlay">
+                        <div class="date-picker-modal-content">
+                            <div class="date-picker-header-modal">
+                                <h3>Выберите конечную дату</h3>
+                                <button type="button" class="date-picker-close-modal" id="end-date-picker-close">&times;</button>
+                            </div>
+                            <div id="end-date-calendar"></div>
+                        </div>
+                    </div>
+                    <input type="hidden" id="task-start-date" name="start_date" value="">
+                    <input type="hidden" id="task-end-date" name="end_date" value="">
+                </div>
+                
+                <div class="task-create-actions">
+                    <button type="button" class="task-create-cancel" id="task-create-cancel">Отмена</button>
+                    <button type="submit" class="task-create-submit">Создать</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="/assets/js/vendor/dayjs.min.js"></script>
+    <script type="module" src="/assets/js/modules/i18n.js"></script>
+    <script src="/assets/js/components/calendar.js"></script>
+    <script type="module" src="/assets/js/components/task-list.js"></script>
+    <script src="/assets/js/components/greeting-panel.js"></script>
+    <script type="module" src="/assets/js/modules/tasks.js"></script>
+    <script type="module" src="/assets/js/modules/calendar.js"></script>
+    <script type="module" src="/assets/js/app.js"></script>
+    <script src="/assets/js/pages/tasks-page.js"></script>
+</body>
+</html>

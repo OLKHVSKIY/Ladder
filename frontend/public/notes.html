@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Ladder - Заметки</title>
+    <link rel="icon" type="image/png" href="/assets/images/icons/ai.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Onest:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/themes/light.css">
+    <link rel="stylesheet" href="/assets/css/pages/tasks.css">
+    <link rel="stylesheet" href="/assets/css/pages/notes.css">
+    <link rel="stylesheet" href="/assets/css/animations/transitions.css">
+    <style>
+        /* Скрываем контент до применения переводов */
+        body:not(.i18n-ready) .main-content {
+            visibility: hidden;
+        }
+    </style>
+    <script>
+        // Применяем язык ДО загрузки страницы
+        (function() {
+            const lang = localStorage.getItem('language') || 'ru';
+            document.documentElement.lang = lang;
+        })();
+    </script>
+</head>
+<body>
+    <!-- Сайдбар -->
+    <div class="sidebar-overlay" id="sidebar-overlay">
+        <div class="sidebar-content">
+            <button class="sidebar-item" data-action="chat">
+                <span class="sidebar-item-text" data-i18n="sidebar.chat">Чат с AI</span>
+            </button>
+            <button class="sidebar-item" data-action="tasks">
+                <span class="sidebar-item-text" data-i18n="sidebar.tasks">Задачи</span>
+            </button>
+            <button class="sidebar-item" data-action="info">
+                <span class="sidebar-item-text" data-i18n="sidebar.info">Информация</span>
+            </button>
+            <button class="sidebar-item" data-action="support">
+                <span class="sidebar-item-text" data-i18n="sidebar.support">Поддержка</span>
+            </button>
+            <button class="sidebar-item" data-action="suggest">
+                <span class="sidebar-item-text" data-i18n="sidebar.suggest">Предложить идею</span>
+            </button>
+            <button class="sidebar-item" data-action="about">
+                <span class="sidebar-item-text" data-i18n="sidebar.about">О нас</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Верхний хедер -->
+    <header class="main-header">
+        <div class="header-divider"></div>
+        <button class="burger-menu" id="burger-menu" data-i18n="[aria-label]common.menu" aria-label="Меню">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+            </svg>
+        </button>
+        <h1 class="page-title" data-i18n="notes.title">Заметки</h1>
+        <button class="settings-btn" id="settings-btn" data-i18n="[aria-label]common.settings" aria-label="Настройки">
+            <img src="/assets/images/icons/settings.png" alt="Настройки" width="24" height="24">
+        </button>
+    </header>
+
+    <!-- Основной контент -->
+    <main class="main-content">
+        <!-- Контент заметок будет здесь -->
+    </main>
+
+    <!-- Нижняя навигация -->
+    <nav class="bottom-navigation">
+        <!-- Задачи (самая левая) -->
+        <button class="nav-item" data-page="tasks">
+            <img src="/assets/images/icons/checklist.png" alt="Задачи" class="nav-icon" width="22" height="22">
+            <span class="nav-label" data-i18n="nav.tasks">Задачи</span>
+        </button>
+        
+        <!-- GPT (слева от центра) -->
+        <button class="nav-item" data-page="gpt">
+            <img src="/assets/images/icons/ai.png" alt="GPT" class="nav-icon" width="22" height="22">
+            <span class="nav-label" data-i18n="nav.gpt">GPT</span>
+        </button>
+        
+        <!-- Круг с плюсом (в центре) -->
+        <button class="nav-item nav-add-btn" id="add-task-btn" aria-label="Добавить задачу">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+        </button>
+        
+        <!-- План (справа от центра) -->
+        <button class="nav-item" data-page="plan">
+            <img src="/assets/images/icons/draft.png" alt="План" class="nav-icon" width="22" height="22">
+            <span class="nav-label" data-i18n="nav.plan">План</span>
+        </button>
+        
+        <!-- Заметки (самая правая) -->
+        <button class="nav-item active" data-page="notes">
+            <img src="/assets/images/icons/notes.png" alt="Заметки" class="nav-icon" width="22" height="22">
+            <span class="nav-label" data-i18n="nav.notes">Заметки</span>
+        </button>
+    </nav>
+
+    <!-- Скрипты -->
+    <script type="module" src="/assets/js/modules/i18n.js"></script>
+    <script type="module" src="/assets/js/app.js"></script>
+    <script type="module" src="/assets/js/pages/notes-page.js"></script>
+</body>
+</html>
+
