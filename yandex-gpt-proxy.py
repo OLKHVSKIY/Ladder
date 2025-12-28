@@ -9,9 +9,25 @@ from urllib.request import urlopen, Request
 from urllib.error import HTTPError, URLError
 import json
 import sys
+import os
+from pathlib import Path
+
+# Загружаем переменные окружения из .env файла
+def load_env_file():
+    """Загружает переменные окружения из .env файла"""
+    env_file = Path(__file__).parent / '.env'
+    if env_file.exists():
+        with open(env_file, 'r') as f:
+            for line in f:
+                line = line.strip()
+                if line and not line.startswith('#') and '=' in line:
+                    key, value = line.split('=', 1)
+                    os.environ[key.strip()] = value.strip()
+
+# Загружаем .env файл
+load_env_file()
 
 # Конфигурация Yandex GPT
-import os
 YANDEX_GPT_API_KEY = os.getenv("YANDEX_GPT_API_KEY", "")
 YANDEX_GPT_FOLDER_ID = os.getenv("YANDEX_GPT_FOLDER_ID", "")
 YANDEX_GPT_URL = "https://llm.api.cloud.yandex.net/foundationModels/v1/completion"
