@@ -42,7 +42,7 @@ export class Calendar {
             'es': ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
         };
         const monthName = (monthNames[lang] || monthNames['ru'])[month];
-        
+
         let html = `
             <div class="calendar-header">
                 <button class="calendar-nav-btn" data-action="prev">‹</button>
@@ -58,7 +58,7 @@ export class Calendar {
                         'es': ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom']
                     };
                     return (weekdays[lang] || weekdays['ru']).map(day => 
-                        `<div class="calendar-day-name">${day}</div>`
+                    `<div class="calendar-day-name">${day}</div>`
                     ).join('');
                 })()}
         `;

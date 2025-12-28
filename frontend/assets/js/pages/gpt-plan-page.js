@@ -2,8 +2,8 @@
 import { YANDEX_GPT_CONFIG, getYandexGptApiUrl } from '../config/yandex-gpt-config.js';
 import { initI18n } from '../modules/i18n.js';
 
-const YANDEX_API_KEY = YANDEX_GPT_CONFIG.API_KEY;
-const YANDEX_FOLDER_ID = YANDEX_GPT_CONFIG.FOLDER_ID;
+// API ключи не нужны на фронтенде - используется бэкенд прокси
+// Ключи хранятся в .env файле и используются только на сервере
 
 // Состояние генерации плана
 let currentPlanData = {
@@ -537,9 +537,8 @@ async function generatePlan() {
     }, 300);
     
     try {
-        if (!YANDEX_API_KEY) {
-            throw new Error('API ключ Yandex GPT не установлен');
-        }
+        // API ключи хранятся на сервере в .env файле
+        // Фронтенд использует бэкенд прокси на localhost:8001
         
         // Формируем промпт для генерации плана
         const prompt = createPlanPrompt();

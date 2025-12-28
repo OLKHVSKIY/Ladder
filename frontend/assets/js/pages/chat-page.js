@@ -2,14 +2,9 @@
 import { YANDEX_GPT_CONFIG, getYandexGptApiUrl } from '../config/yandex-gpt-config.js';
 import { createTask } from '../modules/tasks.js';
 
-const YANDEX_API_KEY = YANDEX_GPT_CONFIG.API_KEY;
-const YANDEX_FOLDER_ID = YANDEX_GPT_CONFIG.FOLDER_ID;
+// API ключи не нужны на фронтенде - используется бэкенд прокси
+// Ключи хранятся в .env файле и используются только на сервере
 const YANDEX_MODELS = YANDEX_GPT_CONFIG.MODELS;
-
-// Проверяем наличие API ключа
-if (!YANDEX_API_KEY) {
-    console.warn('⚠️ Yandex GPT API ключ не установлен! Получите его в Yandex Cloud Console: https://console.cloud.yandex.ru/');
-}
 
 // Состояние создания задачи (для клиентской логики)
 let taskCreationState = null;
@@ -24,10 +19,8 @@ function initChatPage() {
     const sendBtn = document.getElementById('chat-send-btn');
     const chatMessages = document.getElementById('chat-messages');
     
-    // Проверяем наличие API ключа
-    if (!YANDEX_API_KEY) {
-        addMessage('assistant', '⚠️ Для работы чата необходимо установить API ключ Yandex GPT. Получите его в Yandex Cloud Console и вставьте в файл yandex-gpt-config.js');
-    }
+    // API ключи хранятся на сервере в .env файле
+    // Фронтенд использует бэкенд прокси на localhost:8001
     
     // Инициализация сайдбара
     setupSidebar();
@@ -280,10 +273,8 @@ function initChatPage() {
         sendBtn.disabled = true;
         
         try {
-            // Проверяем наличие API ключа
-            if (!YANDEX_API_KEY) {
-                throw new Error('API ключ Yandex GPT не установлен. Получите его в Yandex Cloud Console.');
-            }
+            // API ключи хранятся на сервере в .env файле
+            // Фронтенд использует бэкенд прокси на localhost:8001
             
             // Получаем контекст (задачи и заметки)
             const context = await getContext(message);
